@@ -1,0 +1,67 @@
+Based on your current code and the requirements of the 42 philosophers project (mandatory part), here’s what you still need to do:
+
+---
+
+### 1. **Implement Simulation Stop Condition**
+- Your simulation currently runs forever. You need to:
+  - Stop when a philosopher dies (hasn’t eaten in `time_to_die` ms).
+  - Optionally, stop when all philosophers have eaten `number_of_meals` times (if this argument is provided).
+
+**How:**  
+Implement a monitoring function (can be a separate thread or a loop in main) that checks each philosopher’s `last_meal` and `meals_eaten`.
+
+---
+
+### 2. **Protect Shared Data**
+- If you add shared variables (like a "stop" flag), protect them with a mutex to avoid race conditions.
+
+---
+
+### 3. **Respect Output Format**
+- Output must be in the format:  
+  `[timestamp_in_ms] [philo_id] [action]`
+- Example:  
+  `123 2 is eating`
+
+---
+
+### 4. **Handle Edge Cases**
+- If there is only one philosopher, handle the case where they can never eat (since they can’t pick up two forks).
+
+---
+
+### 5. **Norminette Compliance**
+- Make sure all your files, functions, and variables follow the 42 Norm (line length, function length, naming, etc.).
+
+---
+
+### 6. **Free Resources on Exit**
+- If a philosopher dies or the simulation ends, make sure to:
+  - Join/detach all threads.
+  - Destroy all mutexes.
+  - Free all allocated memory.
+
+---
+
+### 7. **(Optional) Modularize Your Code**
+- Split logic into more functions/files if your code gets too long for Norm.
+
+---
+
+## **Summary Table**
+
+| Task                                 | Status      |
+|---------------------------------------|-------------|
+| Argument parsing/validation           | ✅ Done      |
+| Forks allocation and assignment       | ✅ Done      |
+| Thread creation and joining           | ✅ Done      |
+| Philosopher routine (think/eat/sleep) | ✅ Basic     |
+| Simulation stop condition             | ❌ To Do     |
+| Output format                         | ❌ To Do     |
+| Edge case: one philosopher            | ❌ To Do     |
+| Norminette compliance                 | ⚠️ Review    |
+| Resource cleanup on exit              | ⚠️ Review    |
+
+---
+
+If you want code examples for any of these steps, let me know which one you want to tackle next!

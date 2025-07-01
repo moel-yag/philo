@@ -1,6 +1,6 @@
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=address
 
 SRCS = philo.c routine.c parse_args.c
 OBJS = $(SRCS:.c=.o)
