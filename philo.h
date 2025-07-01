@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:40:00 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/06/27 21:27:11 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:00:23 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ typedef struct s_philo
 long long	get_time(void);
 void		*routine(void *arg);
 bool		is_valid_arg(int ac, char *args[]);
+long long	ft_atoi(const char *str);
+
 
 #endif

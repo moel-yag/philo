@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:39:44 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/06/29 15:09:01 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:34:55 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,74 @@ int main(int ac, char **av)
 	}
 	printf("Philosopher simulation started.\n");
 	
-	// creating the number av[1] of of philosophers
-	 
-	t_philo philo;
+	// creating the ft_atoi(av[1]) of philosophers
+	t_philo *philosophers;
+	int num_philosophers = ft_atoi(av[1]);
+	philosophers = malloc(num_philosophers * sizeof(t_philo));
+	if (!philosophers)
+	{
+		printf("Memory allocation failed.\n");
+		return 3;
+	}
+	for (int i = 0; i < num_philosophers; i++)
+	{
+		philosophers[i].id = i + 1;
+		philosophers[i].meals_eaten = 0;
+		philosophers[i].last_meal = get_time();
+		pthread_mutex_t *left_fork = malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_t *right_fork = malloc(sizeof(pthread_mutex_t));
+		if (!left_fork || !right_fork)
+		{
+			printf("Memory allocation for forks failed.\n");
+			free(philosophers);
+			return 4;
+		}
+		pthread_mutex_init(left_fork, NULL);
+		pthread_mutex_init(right_fork, NULL);
+		philosophers[i].left_fork = left_fork;
+		philosophers[i].right_fork = right_fork;
+		
+		pthread_t thread;
+		pthread_create(&thread, NULL, routine, (void *)&philosophers[i]);
+		pthread_detach(thread); // Detach the thread to avoid memory leaks
+	}
+	// Wait for a while to let philosophers run (this is just for demonstration)
+	usleep(1000000); // 1 second
+	// Clean up
+	for (int i = 0; i < num_philosophers; i++)
+	{
+		pthread_mutex_destroy(philosophers[i].left_fork);
+		pthread_mutex_destroy(philosophers[i].right_fork);
+		free(philosophers[i].left_fork);
+		free(philosophers[i].right_fork);
+	}
+	free(philosophers);
 	
-	philo.id = 1;
-	philo.meals_eaten = 0;
-	philo.last_meal = get_time();
-	pthread_mutex_t left_fork, right_fork;
-	pthread_mutex_init(&left_fork, NULL);
-	pthread_mutex_init(&right_fork, NULL);
-	philo.left_fork = &left_fork;
-	philo.right_fork = &right_fork;
-	pthread_t thread;
-	pthread_create(&thread, NULL, routine, (void *)&philo);
-	pthread_join(thread, NULL);
-	pthread_mutex_destroy(&left_fork);
-	pthread_mutex_destroy(&right_fork);
-	printf("Philosopher %d finished with %d meals eaten.\n", philo.id, philo.meals_eaten);
-	printf("Simulation ended.\n");
-	// Clean up and exit
-	pthread_exit(NULL);
+	// int i = 1;
+	// while (i <= (int )ft_atoi(av[1]))
+	// {
+	// 	printf("Philosopher %d is created.\n", i + 1);
+	// 	i++;
+	// }
+		
+	// t_philo philo;
+	
+	// philo.id = i;
+	// philo.meals_eaten = 0;
+	// philo.last_meal = get_time();
+	// pthread_mutex_t left_fork, right_fork;
+	// pthread_mutex_init(&left_fork, NULL);
+	// pthread_mutex_init(&right_fork, NULL);
+	// philo.left_fork = &left_fork;
+	// philo.right_fork = &right_fork;
+	// pthread_t thread;
+	// pthread_create(&thread, NULL, routine, (void *)&philo);
+	// pthread_join(thread, NULL);
+	// pthread_mutex_destroy(&left_fork);
+	// pthread_mutex_destroy(&right_fork);
+	// printf("Philosopher %d finished with %d meals eaten.\n", philo.id, philo.meals_eaten);
+	// printf("Simulation ended.\n");
+	// // Clean up and exit
+	// pthread_exit(NULL);
 	return 0;
 }
