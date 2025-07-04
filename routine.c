@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:39:48 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/07/02 17:13:50 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:09:28 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	*routine(void *arg)
 	long long	the_time;
 
 	philo = (t_philo *)arg;
-	the_time = get_time();
+	the_time = get_time() - philo->last_meal;
+	if (philo->last_meal == 0)
+		philo->last_meal = the_time;
 	pthread_mutex_lock(philo->stop_mutex);
 	if (*(philo->stop))
 	{
@@ -35,22 +37,22 @@ void	*routine(void *arg)
 	}
 	while (1)
 	{
-		printf("%lld %d is thinking.\n",the_time, philo->id);
+		printf("%lld %d is thinking\n",the_time, philo->id);
 		usleep(1000);
 		pthread_mutex_lock(philo->left_fork);
-		printf("%lld %d picked up left fork.\n",the_time, philo->id);
+		printf("%lld %d has taken a fork\n",the_time, philo->id);
 		pthread_mutex_lock(philo->right_fork);
-		printf("%lld %d picked up right fork.\n",the_time, philo->id);
-		printf("%lld %d is eating.\n",the_time, philo->id);
+		printf("%lld %d has taken a fork\n",the_time, philo->id);
+		printf("%lld %d is eating\n",the_time, philo->id);
 		usleep(1000);
 		pthread_mutex_unlock(philo->stop_mutex);
 		philo->meals_eaten++;
 		philo->last_meal = get_time();
 		pthread_mutex_unlock(philo->right_fork);
-		printf("%lld %d put down right fork.\n",the_time, philo->id);
+		printf("%lld %d put down right fork\n",the_time, philo->id);
 		pthread_mutex_unlock(philo->left_fork);
-		printf("%lld %d put down left fork.\n",the_time, philo->id);
-		printf("%lld %d is sleeping.\n",the_time, philo->id);
+		printf("%lld %d put down left fork\n",the_time, philo->id);
+		printf("%lld %d is sleeping\n",the_time, philo->id);
 		// pthread_mutex_lock(philo->stop_mutex);
 		// if (*(philo->stop))
 		// {

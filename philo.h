@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:40:00 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/07/02 16:27:00 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:10:45 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 
 typedef struct s_philo
 {
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*stop_mutex;
 	int				id;
 	int				meals_eaten;
 	long long		last_meal;
 	pthread_t		threads;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
 	int				*stop;
-	pthread_mutex_t	*stop_mutex;
 }					t_philo;
 
 long long			get_time(void);
