@@ -1,8 +1,8 @@
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-pthread -g3 -fsanitize=address
 
-SRCS = philo.c routine.c parse_args.c
+SRCS = philo.c routine.c monitor.c parse_args.c help_routine.c 
 OBJS = $(SRCS:.c=.o)
 DEPS = philo.h
 

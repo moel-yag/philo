@@ -1,68 +1,18 @@
-### 1. **Implement Simulation Stop Condition**
+TEST 10: Random Scenarios
 
-- Your simulation currently runs forever. You need to:
-  - Stop when a philosopher dies (hasn’t eaten in `time_to_die` ms).
-  - Optionally, stop when all philosophers have eaten `number_of_meals` times (if this argument is provided).
+Running random test 1: 9 891 350 351 7
+FAILED: Unexpected death - 892 6 died
 
-**How:**  
-Implement a monitoring function (can be a separate thread or a loop in main) that checks each philosopher’s `last_meal` and `meals_eaten`.
+Running random test 2: 5 279 148 175 8
+FAILED: Unexpected death - 280 1 died
 
----
+Running random test 3: 3 590 286 79 4
+FAILED: Unexpected death - 591 1 died
 
-### 2. **Protect Shared Data**
+Running random test 4: 9 950 234 298 10
+PASSED: No deaths occurred in random test 4
 
-- If you add shared variables (like a "stop" flag), protect them with a mutex to avoid race conditions.
+Running random test 5: 6 432 80 108 7
+PASSED: No deaths occurred in random test 5
 
----
-
-### 3. **Respect Output Format**
-
-- Output must be in the format:  
-  `[timestamp_in_ms] [philo_id] [action]`
-- Example:  
-  `123 2 is eating`
-
----
-
-### 4. **Handle Edge Cases**
-
-- If there is only one philosopher, handle the case where they can never eat (since they can’t pick up two forks).
-
----
-
-### 5. **Norminette Compliance**
-
-- Make sure all your files, functions, and variables follow the 42 Norm (line length, function length, naming, etc.).
-
----
-
-### 6. **Free Resources on Exit**
-
-- If a philosopher dies or the simulation ends, make sure to:
-  - Join/detach all threads.
-  - Destroy all mutexes.
-  - Free all allocated memory.
-
----
-
-### 7. **(Optional) Modularize Your Code**
-
-- Split logic into more functions/files if your code gets too long for Norm.
-
----
-
-## **Summary Table**
-
-| Task                                  | Status    |
-| ------------------------------------- | --------- |
-| Argument parsing/validation           | ✅ Done   |
-| Forks allocation and assignment       | ✅ Done   |
-| Thread creation and joining           | ✅ Done   |
-| Philosopher routine (think/eat/sleep) | ✅ Basic  |
-| Simulation stop condition             | ❌ To Do  |
-| Output format                         | ❌ To Do  |
-| Edge case: one philosopher            | ❌ To Do  |
-| Norminette compliance                 | ⚠️ Review |
-| Resource cleanup on exit              | ⚠️ Review |
-
----
+Testing complete. Results saved in ./test_results

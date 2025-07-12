@@ -51,7 +51,7 @@ bool	large_number(const char *arg, int i)
 	long long	num;
 
 	num = ft_atoi(arg);
-	if (num < 0 || (i == 0 && num > 200))
+	if (num < 0 || (i == 1 && num == 0) || (i == 0 && num > 200))
 		return (true);
 	return (false);
 }
@@ -66,7 +66,7 @@ bool	is_valid_arg(int ac, char *args[])
 	{
 		if (!args[i] || !*args[i])
 			return (false);
-		if (large_number(args[i], i))
+		if (large_number(args[i], i - 1))
 			return (false);
 		j = 0;
 		while (j < (int)ft_strlen(args[i]))
