@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:39:44 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/07/13 18:26:13 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:48:34 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ int	main(int ac, char **av)
 	i = -1;
 	while (++i < d.num_philo)
 		pthread_join(d.philos[i].threads, NULL);
-	c = {d.philos, d.forks, &d.stop_mutex, &d.print_mutex,
-		d.num_philo};
+	c = {d.philos, d.forks, &d.stop_mutex, &d.print_mutex, d.num_philo};
 	cleanup(&c);
 	return (0);
 }

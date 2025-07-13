@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:40:00 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/07/13 18:30:07 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:43:28 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ long long			ft_atoi(const char *str);
 void				*monitor(void *arg);
 void				print_status(t_philo *philo, const char *status);
 void				precise_usleep(long duration, t_philo *philo);
-static void			cleanup(t_cleanup_data *data);
+void			cleanup(t_cleanup_data *data);
 
 #endif
