@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:40:00 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/07/09 17:46:41 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:06:53 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,27 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <limits.h>
+
+typedef struct	s_cleanup_data
+{
+    t_philo			*philos;
+    pthread_mutex_t	*forks;
+    pthread_mutex_t	*stop_mutex;
+    pthread_mutex_t	*print_mutex;
+    int				num_philo;
+}				t_cleanup_data;
+
+typedef struct	s_main_data
+{
+    t_philo			philos[200];
+    pthread_mutex_t	forks[200];
+    pthread_mutex_t	stop_mutex;
+    pthread_mutex_t	print_mutex;
+    t_sim			sim;
+    pthread_t		monitor_thread;
+    int				stop;
+    int				num_philo;
+}				t_main_data;
 
 typedef struct s_philo
 {
