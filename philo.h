@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:40:00 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/07/13 18:06:53 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:30:07 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,10 @@
 # include <unistd.h>
 # include <limits.h>
 
-typedef struct	s_cleanup_data
-{
-    t_philo			*philos;
-    pthread_mutex_t	*forks;
-    pthread_mutex_t	*stop_mutex;
-    pthread_mutex_t	*print_mutex;
-    int				num_philo;
-}				t_cleanup_data;
-
-typedef struct	s_main_data
-{
-    t_philo			philos[200];
-    pthread_mutex_t	forks[200];
-    pthread_mutex_t	stop_mutex;
-    pthread_mutex_t	print_mutex;
-    t_sim			sim;
-    pthread_t		monitor_thread;
-    int				stop;
-    int				num_philo;
-}				t_main_data;
-
 typedef struct s_philo
 {
 	pthread_mutex_t	*left_fork;
-	int 			leftfork_id;
+	int				leftfork_id;
 	int				rightfork_id;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*stop_mutex;
@@ -73,6 +52,27 @@ typedef struct s_sim
 	pthread_mutex_t	*print_mutex;
 }					t_sim;
 
+typedef struct s_cleanup_data
+{
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	*stop_mutex;
+	pthread_mutex_t	*print_mutex;
+	int				num_philo;
+}				t_cleanup_data;
+
+typedef struct s_main_data
+{
+	t_philo			philos[200];
+	pthread_mutex_t	forks[200];
+	pthread_mutex_t	stop_mutex;
+	pthread_mutex_t	print_mutex;
+	t_sim			sim;
+	pthread_t		monitor_thread;
+	int				stop;
+	int				num_philo;
+}				t_main_data;
+
 long long			get_time(void);
 void				check_death(t_sim *sim, int i);
 void				*routine(void *arg);
@@ -81,5 +81,6 @@ long long			ft_atoi(const char *str);
 void				*monitor(void *arg);
 void				print_status(t_philo *philo, const char *status);
 void				precise_usleep(long duration, t_philo *philo);
+static void			cleanup(t_cleanup_data *data);
 
 #endif

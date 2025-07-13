@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:39:44 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/07/13 18:10:56 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:26:13 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,10 @@ static int	init_simulation(t_main_data *d, int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_main_data	d;
-	int			i;
-	int			ret;
+	t_main_data		d;
+	t_cleanup_data	c;
+	int				i;
+	int				ret;
 
 	if (ac < 5 || ac > 6)
 		return (printf("Usage: %s number t_die t_eat t_sleep [meals]\n",
@@ -108,7 +109,7 @@ int	main(int ac, char **av)
 	i = -1;
 	while (++i < d.num_philo)
 		pthread_join(d.philos[i].threads, NULL);
-	t_cleanup_data c = {d.philos, d.forks, &d.stop_mutex, &d.print_mutex,
+	c = {d.philos, d.forks, &d.stop_mutex, &d.print_mutex,
 		d.num_philo};
 	cleanup(&c);
 	return (0);
