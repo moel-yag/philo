@@ -88,6 +88,14 @@ static int	init_simulation(t_main_data *d, int ac, char **av)
 	return (0);
 }
 
+void	init_cleanup_data(t_cleanup_data *c, t_main_data *d)
+{
+	c->philos = d->philos;
+	c->forks = d->forks;
+	c->stop_mutex = &d->stop_mutex;
+	c->print_mutex = &d->print_mutex;
+}
+
 int	main(int ac, char **av)
 {
 	t_main_data		d;
@@ -109,7 +117,8 @@ int	main(int ac, char **av)
 	i = -1;
 	while (++i < d.num_philo)
 		pthread_join(d.philos[i].threads, NULL);
-	c = {d.philos, d.forks, &d.stop_mutex, &d.print_mutex, d.num_philo};
+	init_cleanup_data(&c, &d);
+	// c = {d.philos, d.forks, &d.stop_mutex, &d.print_mutex, d.num_philo};
 	cleanup(&c);
 	return (0);
 }
