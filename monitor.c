@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
 void	check_death(t_sim *sim, int i)
 {
 	pthread_mutex_lock(&sim->philos[i].meal_mutex);
@@ -33,36 +31,52 @@ void	check_death(t_sim *sim, int i)
 		pthread_mutex_unlock(&sim->philos[i].meal_mutex);
 }
 
+static int	all_philos_full(t_sim *sim)
+{
+	int	i;
+
+	i = 0;
+	while (i < sim->num_philo)
+	{
+		pthread_mutex_lock(&sim->philos[i].meal_mutex);
+		if (sim->philos[i].meals_eaten < sim->meal_target)
+		{
+			pthread_mutex_unlock(&sim->philos[i].meal_mutex);
+			return (0);
+		}
+		pthread_mutex_unlock(&sim->philos[i].meal_mutex);
+		i++;
+	}
+	return (1);
+}
+
+static int	should_stop(t_sim *sim)
+{
+	int	stop;
+
+	pthread_mutex_lock(sim->stop_mutex);
+	stop = *(sim->stop);
+	pthread_mutex_unlock(sim->stop_mutex);
+	return (stop);
+}
+
 void	*monitor(void *arg)
 {
 	t_sim	*sim;
 	int		i;
-	int		all_full;
 
 	sim = (t_sim *)arg;
 	while (1)
 	{
-		i = -1;
-		all_full = 1;
-		while (++i < sim->num_philo)
+		i = 0;
+		while (i < sim->num_philo)
 		{
 			check_death(sim, i);
-			pthread_mutex_lock(sim->stop_mutex);
-			if (*(sim->stop))
-			{
-				pthread_mutex_unlock(sim->stop_mutex);
+			if (should_stop(sim))
 				return (NULL);
-			}
-			pthread_mutex_unlock(sim->stop_mutex);
-			if (sim->meal_target > 0)
-			{
-				pthread_mutex_lock(&sim->philos[i].meal_mutex);
-				if (sim->philos[i].meals_eaten < sim->meal_target)
-					all_full = 0;
-				pthread_mutex_unlock(&sim->philos[i].meal_mutex);
-			}
+			i++;
 		}
-		if (sim->meal_target > 0 && all_full)
+		if (sim->meal_target > 0 && all_philos_full(sim))
 		{
 			pthread_mutex_lock(sim->stop_mutex);
 			*(sim->stop) = 1;
