@@ -94,6 +94,7 @@ void	init_cleanup_data(t_cleanup_data *c, t_main_data *d)
 	c->forks = d->forks;
 	c->stop_mutex = &d->stop_mutex;
 	c->print_mutex = &d->print_mutex;
+	c->num_philo = d->num_philo;
 }
 
 int	main(int ac, char **av)
